@@ -1,0 +1,293 @@
+:root {
+    --section-title: #84C225;
+    --section-title-underline: #00814D;
+    --seeMore-button: #37BEB0;
+    --card-type: #84C225;
+    --text-black: #323232;
+    --background: #EDF2F6;
+}
+
+/*  all visionDictionary content */
+.allVision{
+    position: relative;
+    padding-block: 70px 280px;
+}
+.visionDictionaryTitle{
+    position: relative;
+}
+.visionDictionaryIcon{
+    position: relative;
+    width: 58px;
+    z-index: 1;
+    top: -8px;
+    left: 14px;
+}
+@media only screen and (max-width: 725px) {
+    .allVision{
+        padding-block: 60px 280px;
+    }
+}
+@media only screen and (max-width: 610px) {
+    .visionDictionaryIcon{
+        width: 40px;
+        top: -3px;
+        left: 3px;
+    }
+}
+.cvf-universal-content{
+    margin-block: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(244px, 1fr)); /* Ensures equal width */
+    gap: 25px;
+    margin-inline: auto;
+    padding-inline: 20px;
+    justify-items: center;
+    margin-top: 10px;
+}
+.seeMoreArticle{
+    border-radius:5px;
+    max-width: 340px;
+    width: 100%;
+    background-color: white;
+    max-height: 320px;
+    box-shadow: 0 3px 3px #0000004a;
+    overflow: hidden;
+    cursor: pointer;
+}
+.seeMoreArticle img{
+    height: 67%;
+    overflow: hidden;
+}
+.articleContent{
+    position: relative;
+    max-height: 25px;
+}
+.articleContent .articleType{
+    margin-top: -10px;
+    position: relative;
+}
+.articleContent .articleType .articleType-text {
+    max-width: 180px;
+    width: fit-content;
+    margin-inline: auto;
+    color: #ffffff;
+    font-size: 12px;
+    padding-inline: 5px;
+    background-color: var(--card-type);
+    border: 1px solid var(--card-type);
+}
+
+.articleContent .articleType .articleType-mark{
+    max-width: 28px;
+    max-height: 28px;
+    position: absolute;
+    right: 13px;
+    bottom: 0;
+}
+.articleContent .articleContent-text{
+    max-height: 70px;
+    padding: 4px 20px;
+    font-size: 15px;
+    color: var(--text-black);
+    overflow: hidden;
+}
+.articleContent .articleContent-date{
+    color: #888888;
+    font-size: 14px;
+    padding-left: 20px;
+}
+.space{
+    display: none;
+}
+@media only screen and (max-width: 440px) {
+    .cvf-universal-content{
+        padding-inline: 20px;
+    }
+}
+/* end all visionDictionary content */
+
+/* visionImproment content */
+.visionImproment{
+    position: relative;
+    height: 425px;
+}
+.visionImproment .backgroundImg{
+    width: 100%;
+    height: 286px;
+    margin-top: -270px;
+    background-image: url(../../img/backgrounds/visionImproment.png);
+    background-size: cover;
+    background-position: center;
+}
+.baners{
+    max-width: 1090px;
+    margin-inline: auto;
+    position: relative;
+    margin-top: -140px;
+    gap: 10px;
+}
+.baners .baner img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+.baners .baner{
+    width: 510px;
+    max-height: 280px;
+    height: 280px;
+    overflow: hidden;
+}
+.leftBaner{
+    left: 0;
+    border-radius: 0 40px 0 40px;
+    border: 10px solid var(--seeMore-button);
+}
+.rightBaner{
+    right: 0;
+    border-radius: 40px 0 40px 0;
+    border: 10px solid var(--seeMore-button);
+}
+
+@media screen and (max-width: 1200px) {
+    .leftBaner, .rightBaner{
+        border-width: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .visionImproment{
+        height: auto;
+        margin-bottom: 20px;
+    }
+    .visionImproment .backgroundImg{
+        height: 230px;
+        margin-top: -270px;
+    }
+    .baners{
+        margin-top: -150px;
+        gap: 15px;
+    }
+    .baners .baner{
+        height: 180px;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .visionImproment .backgroundImg{
+        height: 370px;
+        margin-top: -277px;
+    }
+    .baners{
+        margin-top: -300px;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    .baners .baner{
+        width: 90%;
+        height: 280px;
+    }
+    .leftBaner, .rightBaner{
+        border-width: 10px;
+    }
+}
+@media screen and (max-width: 380px) {
+    .baners .baner{
+        height: 240px;
+    }
+}
+@media screen and (max-width: 405px) {
+    .baners .baner{
+        height: 190px;
+    }
+}
+@media screen and (max-width: 380px) {
+    .visionImproment .backgroundImg {
+        height: 280px;
+        margin-top: -282px;
+    }
+    .baners{
+        margin-top: -200px;
+    }
+    .baners .baner{
+        height: 150px;
+    }
+}
+/* end visionImproment content */
+
+/* endBanner content */
+.endBanner{
+    background-image: linear-gradient(var(--background), #ffffff);
+}
+/* end endBanner content */
+
+.fromShop{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: auto;
+    margin-top: 25px;
+}
+.fromShop .goProducts{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: 1000;
+    text-align: center;
+    padding-top: 15%;
+    color: white;
+    background-color: var(--seeMore-button);
+}
+.fromShop p{
+    width: fit-content;
+    color: var(--text-black);
+    font-size: 20px;
+    font-weight: 700;
+}
+@media screen and (max-width: 739px) {
+    .fromShop p{
+        font-size: 17px;
+    }
+}
+@media screen and (max-width: 674px) {
+    .fromShop p{
+        font-size: 14px;
+    }
+    .fromShop .goProducts{
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+        padding-top: 5%;
+    }
+} 
+@media screen and (max-width: 564px) {
+    .popularArticle{
+        margin-top: 26px;
+    }
+    .popularArticle .bestPopular{
+        margin-top: 30px;
+    }
+    .fromShop p{
+        font-size: 14px;
+        text-align: center;
+    }
+    .space{
+        display: block;
+    }
+    .allVision{
+        padding-block: 40px 280px;
+    }
+}
+@media screen and (max-width: 372px) {
+    .fromShop p {
+        font-size: 12px;
+        text-align: center;
+    }
+    .fromShop .goProducts {
+        width: 25px;
+        height: 25px;
+        font-size: 16px;
+        padding-top: 1%;
+    }
+}
