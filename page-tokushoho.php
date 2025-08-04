@@ -19,19 +19,14 @@
   <section class="wrap contact tokushoho">
     <ul class="breadcrumb">
       <li><a href="./">トップページ</a></li>
-      <li>会社概要</li>
+      <li>特定商取引法に関する記述</li>
     </ul>
-
-    <h2>会社概要</h2>
+    <h2>特定商取引法に関する記述</h2>
 
     <table border="1" cellpadding="8" cellspacing="0">
       <tbody>
         <tr>
-          <th>販売店名</th>
-          <td>リベルタ</td>
-        </tr>
-        <tr>
-          <th>運営会社</th>
+          <th>販売者名</th>
           <td>合同会社リベルタ</td>
         </tr>
         <tr>
@@ -43,15 +38,15 @@
           <td>東京都港区浜松町2-2-15-503</td>
         </tr>
         <tr>
-          <th>メールアドレス</th>
-          <td>
-            info@aaaaa.net
-          </td>
+          <th>免許・資格</th>
+          <td>東京都公安委員会　古物商許可番号　第11111号</td>
         </tr>
         <tr>
-          <th>URL</th>
+          <th>連絡先</th>
           <td>
-            https://aaaaa.net
+            TEL：03-6435-9861<br>
+            MAIL：info@aaaaa.net<br>
+            または「お問い合わせ」ページよりご連絡ください。
           </td>
         </tr>
         <tr>
@@ -61,6 +56,18 @@
             土日祝　11時～17時<br>
             ※年末年始を除く
           </td>
+        </tr>
+        <tr>
+          <th>お支払い方法</th>
+          <td>クレジットカード払い、銀行振込</td>
+        </tr>
+        <tr>
+          <th>商品引き渡し時期</th>
+          <td>入金確認後２営業日以内に発送させていただきます。</td>
+        </tr>
+        <tr>
+          <th>商品引き渡し方法</th>
+          <td>ゆうパックにてお届けいたします。</td>
         </tr>
     </table>
   </section>

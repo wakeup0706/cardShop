@@ -1,635 +1,679 @@
 <?php  get_header(); ?>
-<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/css/Layout/main.css" />
-    <main>
-        <section class="first container">
-            <div><a href="<?php echo site_url();?>/eidoptometry"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/eyetest_baner.jpg" alt="eyetest_baner"></a></div>
-        </section>
-        <section class="testResult inConteiner">
-            <div class="bg vector1"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector1.png" alt=""></div>
-            <div class="bg vector2"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector2.png" alt=""></div>
-            <div class="eyeTestTitle">
-                <div class="testResultIcon"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/testResult.png" alt="testResult"></div>
-                <div class="section-title"><p class="text-top">あなたの視力検査結果</p></div>
-            </div>
-            <div class="result flex space-around">
-                <div class="nearsighted">
-                    <div class="flex result-title space-center">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/eye.png" alt="eye"><p>視 力</p>
-                    </div>
-                    <div class="flex eyes space-center">
-                        <div>左</div>
-                        <div>右</div>
-                    </div>
-                    <div class="flex result-value space-around">
-                        <div id="view_r_result">測定中</div>
-                        <div id="view_l_result">測定中</div>
-                    </div>
-                </div>
-                <div class="farsighted">
-                    <div class="flex result-title space-center">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/eye.png" alt="eye"><p>近 視 / 遠 視</p>
-                    </div>
-                    <div class="flex eyes space-center">
-                        <div>左</div>
-                        <div>右</div>
-                    </div>
-                    <div class="flex result-value space-around">
-                        <div id="view_r_kinshi">測定中</div>
-                        <div id="view_l_kinshi">測定中</div>
-                    </div>
-                </div>
-                <div class="astigmatism">
-                    <div class="flex result-title space-center">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/eye.png" alt="eye"><p>乱 視</p>
-                    </div>
-                    <div class="flex eyes space-center">
-                        <div>左</div>
-                        <div>右</div>
-                    </div>
-                    <div class="flex result-value space-around">
-                        <div id="view_r_ranshi">測定中</div>
-                        <div id="view_l_ranshi">測定中</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="articles inConteiner">
-            <div class="bg vector3"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector3.png" alt=""></div>
-            <div class="bg vector4"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector4.png" alt=""></div>
-            <div class="bg vector5"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector5.png" alt=""></div>
-            <div class="bg vector6"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector6.png" alt=""></div>
-            <div class="bg vector7"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector7.png" alt=""></div>
-            <div class="bg vector8"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector8.png" alt=""></div>
-            <div class="articleTitle">
-                <div class="articleTitleIcon"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/lastArticle.png" alt="testResult"></div>
-                <div class="section-title"><p class="text-top">最新記事</p></div>
-            </div>
-                <?php
-                $args = array(
-                    'post_type' => 'all_articles',
-                    'posts_per_page' => 1,
-                    'orderby' => 'date',
-                    'order' => 'DESC'
-                );
-                
-                $featured_query = new WP_Query($args);
-                
-                if ($featured_query->have_posts()) :
-                    while ($featured_query->have_posts()) : $featured_query->the_post();
-                        $category = get_the_category();
-                ?>
-                <div class="bestLastArticle flex" onclick="location.href='<?php echo get_permalink() ?>';">
-                    <div class="baner">
-                        <?php if (has_post_thumbnail()) : ?>
-                            <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
-                        <?php else : ?>
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/articles/default-article.jpg" alt="<?php echo esc_attr(get_the_title()); ?>">
-                        <?php endif; ?>
-                    </div>
-                    <div class="content">
-                        <div class="articleType"><?php echo esc_html($category[0]->name); ?></div>
-                        <div class="articleSubject"><p><?php echo get_the_title(); ?></p></div>
-                        
-                        <div class="articleDate"><p><?php echo get_the_date('Y/m/d'); ?></p></div>
-                    </div>
-                </div>
-                <?php
-                    endwhile;
-                    wp_reset_postdata();
-                endif;
-                ?>
-            <div class="seeMore">
-                <div class="seeMoreTitle"><p>最 新 記 事</p></div>
-                <div class="seeMoreArticles">
-                    <?php
-                    $args = array(
-                        'post_type' => 'all_articles',
-                        'posts_per_page' => 3,
-                        'offset' => 1,
-                        'orderby' => 'date',
-                        'order' => 'DESC'
-                    );
-                    
-                    $latest_query = new WP_Query($args);
-                    
-                    if ($latest_query->have_posts()) :
-                        while ($latest_query->have_posts()) : $latest_query->the_post();
-                            $category = get_the_category();
-                    ?>
-                        <div class="seeMoreArticle" onclick="location.href='<?php echo get_permalink() ?>';">
-                            <span >
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
-                            <?php else : ?>
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/articles/default-article.jpg" alt="<?php echo esc_attr(get_the_title()); ?>">
-                                <?php endif; ?>
-                            </span>
-                            <div class="articleContent">
-                                <div class="articleType">
-                                    <div class="articleType-text"><p><?php echo esc_html($category[0]->name); ?></p></div>
-                                    <div class="articleType-mark"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/mark.png" alt="mark"></div>
-                                </div>
-                                <div class="articleContent-date"><p><?php echo get_the_date('Y.m.d'); ?></p></div>
-                                <div class="articleContent-text">
-                                    <p><?php echo get_the_title(); ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    <?php
-                        endwhile;
-                        wp_reset_postdata();
-                    else :
-                    ?>
-                        <div class="no-posts">
-                            <p>記事が見つかりませんでした。</p>
-                        </div>
-                    <?php
-                    endif;
-                    ?>
-                </div>
-            </div>
-            <div class="seeMoreButton">
-                <a href="<?php echo site_url();?>/recent"><span>最新記事をもっと見る</span></a>
-            </div>
-        </section>
-        <section class="youtube inConteiner">
-            <div class="bg vector9"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector9.png" alt=""></div>
-            <div class="articleTitle">
-                <div class="articleTitleIcon"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/Youtobe.png" alt="testResult"></div>
-                <div class="section-title"><p class="text-top">視力回復相談室</p></div>
-            </div>
-            <div class="youtube-iframe">
-                <iframe src="https://www.youtube.com/embed/kaKXJQZZa9w?autoplay=1&mute=1&controls=0&loop=1&playlist=kaKXJQZZa9w" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
-            <div class="seeMoreButton">
-                <a href="https://www.youtube.com/channel/UCN0xlurLZi2E3m2_Nl5DT8Q" target="_blank"><span>視力回復相談室の動画を見る</span></a>
-            </div>
-        </section>
-        <section class="visionDictionary container">
-            <div class="inConteiner">
-                <div class="visionDictionaryTitle">
-                    <div class="visionDictionaryIcon"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/visionDic.png" alt="testResult"></div>
-                    <div class="section-title"><p class="text-top">視力回復辞典</p></div>
-                    <div class="pushButtons">
-                        <div class="toLeft"><div class="to">«</div></div>
-                        <div class="toRight"><div class="to">»</div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-wrapper">
-                <ul class="card-list swiper-wrapper">
-                <?php
-                // Get current page number
-                $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-                
-                // Get sort parameter from URL
-                $sort = isset($_GET['sort']) ? sanitize_text_field($_GET['sort']) : 'newest';
-                
-                // Set up query arguments based on sort
-                $args = array(
-                    'post_type' => 'all_articles',
-                    'posts_per_page' => 7,
-                    'paged' => $paged,
-                    'category_name' => '視力回復辞典(視力回復の真実)' // Add your category slug here
-                );
-                
-                switch($sort) {
-                    case 'popular':
-                        $args['meta_key'] = 'post_views';
-                        $args['orderby'] = 'meta_value_num';
-                        $args['order'] = 'DESC';
-                        break;
-                    case 'oldest':
-                        $args['orderby'] = 'date';
-                        $args['order'] = 'ASC';
-                        break;
-                    default: // newest
-                        $args['orderby'] = 'date';
-                        $args['order'] = 'DESC';
-                }
-                
-                $query = new WP_Query($args);
+<main>
+	<section class="products">
+		<article class="product-card cat01">
+			<img src="img/item/card01.png" alt="">
+			<p class="card_name">【ワンピース】ＳＥＣ）3周年スペシャルカード◇モンキー・Ｄ・ルフィ[銀箔]OP05-119SEC9</p>
+			<p>¥249,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat02">
+			<img src="img/item/card02.png" alt="">
+			<p class="card_name">【ポケモン】ＢＷＲ◇レシラムｅｘ</p>
+			<p>¥249,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card03.png" alt="">
+			<p class="card_name">【ワンピース】Ｒ）パラレル◇ギア２[フルアート]OP11-080R1</p>
+			<p>¥98,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card04.png" alt="">
+			<p class="card_name">【ワンピース】ＳＥＣ）パラレル◇モンキー・Ｄ・ルフィ[背景原作]OP11-118SEC2</p>
+			<p>¥98,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card05.png" alt="">
+			<p class="card_name">【ワンピース】ＳＲ）3周年スペシャルカード◇マーシャル・Ｄ・ティーチ[銀箔]OP09-093SR4</p>
+			<p>¥98,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card06.png" alt="">
+			<p class="card_name">【ワンピース】ＳＲ）スペシャルカード◇ルフィ太郎OPST18-005SR1</p>
+			<p>¥98,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card07.png" alt="">
+			<p class="card_name">【ワンピース】Ｌ）パラレル◇モンキー・Ｄ・ルフィ[右手グー]OP11-040L1</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card08.png" alt="">
+			<p class="card_name">【ワンピース】Ｌ）パラレル◇ナミ[右手武器]OP11-041L1</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card09.png" alt="">
+			<p class="card_name">【ワンピース】Ｌゼット通常版</p>
+			<p>¥29,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card10.png" alt="">
+			<p class="card_name">【ワンピース】ＳＲ）パラレル◇ヴィンスモーク・レイジュ[nuisuke画]</p>
+			<p>¥29,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat03">
+			<img src="img/item/card11.png" alt="">
+			<p class="card_name">【ドラゴンボール】【パラレル】FS10-17 怒りと憎悪のサイヤ人 C★</p>
+			<p>¥29,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat03">
+			<img src="img/item/card12.png" alt="">
+			<p class="card_name">【ドラゴンボール】FS10-03 ゴールデンフリーザ SR</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat03">
+			<img src="img/item/card13.png" alt="">
+			<p class="card_name">【ドラゴンボール】【パラレル】FS09-02 キンカンマン C★</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat03">
+			<img src="img/item/card14.png" alt="">
+			<p class="card_name">【ドラゴンボール】FS09-08 孫悟空バーダック SR</p>
+			<p>¥14,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat02">
+			<img src="img/item/card15.png" alt="">
+			<p class="card_name">【ポケモン】ＰＲ◇ピカチュウ</p>
+			<p>¥14,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat02">
+			<img src="img/item/card16.png" alt="">
+			<p class="card_name">【ポケモン】ＲＲ◇ミュウｅｘ151-165-SV2A-B</p>
+			<p>¥14,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat02">
+			<img src="img/item/card17.png" alt="">
+			<p class="card_name">【ポケモン】ＲＲＲ◇ゼラオラＶＭＡＸ041-172-S12A-B</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card18.png" alt="">
+			<p class="card_name">【ワンピース】Ｌ◇サボ[通常版]OP05-001L</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card19.png" alt="">
+			<p class="card_name">【ワンピース】Ｌ◇トニートニー・チョッパーOP08-001L</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+		<article class="product-card cat01">
+			<img src="img/item/card20.png" alt="">
+			<p class="card_name">【ワンピース】Ｌ◇バギーOP09-042L</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
 
-                if ($query->have_posts()) :
-                    while ($query->have_posts()) : $query->the_post();
-                        $category = get_the_category();
-                        ?>
-                    <li class="card-item swiper-slide">
-                        <a href="<?php echo get_permalink(); ?>" class="card-link">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('full', array('class' => 'article-thumbnail')); ?>
-                            <?php else : ?>
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/articles/default-article.jpg" alt="<?php echo esc_attr(get_the_title()); ?>">
-                            <?php endif; ?>
-                            <div class="flex space-between"><p class="badge"><?php echo esc_html($category[0]->name); ?></p><p class="date"><?php echo get_the_date('Y/m/d'); ?></p></div>
-                            <h2 class="card-title"><?php echo the_title(); ?></h2>
-                            <button class="card-button"></button>
-                        </a>
-                    </li>
-                    <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    ?>
-                    <div class="no-articles">
-                        <p>記事が見つかりませんでした。</p>
-                    </div>
-                <?php
-                endif;
-                ?>
-                </ul>
-                <div class="swiper-pagination swiper-pagination-vision"></div>
-            </div>
-            <div class="seeMoreButton">
-                <a href="<?php echo site_url();?>/visiondictionary"><span>視力回復辞典をもっと見る</span></a>
-            </div>
-        </section>
-        <section class="visionImproment">
-            <div class="backgroundImg"></div>
-            <div class="baners flex space-between">
-                <div class="baner leftBaner" onclick="javascript:window.open('https://www.heallite.com/c/desklight/gentlite/M0002', '_blank');"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/land_banner1.jpg" alt=""></div>
-                <div class="baner rightBaner" onclick="location.href='<?php echo site_url();?>/visionpossibility';"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/land_banner2.jpg" alt=""></div>
-            </div>
-        </section>
-        <section class="eyeGlossary container">
-            <div class="bg vector11"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector11.png" alt=""></div>
-            <div class="bg vector12"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector12.png" alt=""></div>
-            <div class="bg vector13"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector13.png" alt=""></div>
-            <div class="inConteiner">
-                <div class="eyeGlossaryTitle">
-                    <div class="eyeGlossaryIcon"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/eyeGlossary.png" alt="testResult"></div>
-                    <div class="section-title"><p class="text-top">目の用語辞典 </p></div>
-                    <div class="pushButtons">
-                        <div class="toLeft"><div class="to">«</div></div>
-                        <div class="toRight"><div class="to">»</div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="eyeGlossaryCard-wrapper">
-                <ul class="card-list swiper-wrapper">
-                <?php
-                // Get current page number
-                $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-                
-                // Get sort parameter from URL
-                $sort = isset($_GET['sort']) ? sanitize_text_field($_GET['sort']) : 'newest';
-                
-                // Set up query arguments based on sort
-                $args = array(
-                    'post_type' => 'all_terms',
-                    'posts_per_page' => 7,
-                    'paged' => $paged,
-                    'category_name' => '目の用語辞典' // Add your category slug here
-                );
-                
-                switch($sort) {
-                    case 'popular':
-                        $args['meta_key'] = 'post_views';
-                        $args['orderby'] = 'meta_value_num';
-                        $args['order'] = 'DESC';
-                        break;
-                    case 'oldest':
-                        $args['orderby'] = 'date';
-                        $args['order'] = 'ASC';
-                        break;
-                    default: // newest
-                        $args['orderby'] = 'date';
-                        $args['order'] = 'DESC';
-                }
-                
-                $query = new WP_Query($args);
+		<article class="product-card cat03">
+			<img src="img/item/card21.jpg" alt="【ドラゴンボール】FB06-001">
+			<p class="card_name">【ドラゴンボール】FB06-001</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
 
-                if ($query->have_posts()) :
-                    while ($query->have_posts()) : $query->the_post();
-                        $category = get_the_category();
-                        ?>
+		<article class="product-card cat03">
+			<img src="img/item/card22.jpg" alt="【ドラゴンボール】FB06-002">
+			<p class="card_name">【ドラゴンボール】FB06-002</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
 
-                    <li class="card-item swiper-slide">
-                        <a href="<?php echo get_permalink(); ?>" class="card-link">
-                        <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('full', array('class' => 'article-thumbnail')); ?>
-                            <?php else : ?>
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/articles/default-article.jpg" alt="<?php echo esc_attr(get_the_title()); ?>">
-                            <?php endif; ?>
-                            <div class="flex space-between"><p class="badge"><?php echo esc_html($category[0]->name); ?></p><p class="date"><?php echo get_the_date('Y/m/d'); ?></p></div>
-                            <h2 class="card-title"><?php echo the_title(); ?></h2>
-                            <button class="card-button"></button>
-                        </a>
-                    </li>
-                    <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    ?>
-                    <div class="no-articles">
-                        <p>記事が見つかりませんでした。</p>
-                    </div>
-                <?php
-                endif;
-                ?>
-                </ul>
-                <div class="swiper-pagination swiper-pagination-vision"></div>
-            </div>
-            <div class="seeMoreButton">
-                <a href="<?php echo site_url();?>/eyeGlossary"><span>目の用語辞典をもっと見る</span></a>
-            </div>
-        </section>
-        <section class="recipes container">
-            <div class="bg vector14"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector14.png" alt=""></div>
-            <div class="bg vector15"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector15.png" alt=""></div>
-            <div class="bg vector16"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector16.png" alt=""></div>
-            <div class="inConteiner">
-                <div class="visionDictionaryTitle">
-                    <div class="recipeIcon"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/recipe.png" alt="testResult"></div>
-                    <div class="section-title"><p class="text-top">目に優しいレシピ</p></div>
-                    <div class="pushButtons">
-                        <div class="toLeft"><div class="to">«</div></div>
-                        <div class="toRight"><div class="to">»</div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="recipesCard-wrapper">
-            <ul class="card-list swiper-wrapper">
-                <?php
-                // Get current page number
-                $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-                
-                // Get sort parameter from URL
-                $sort = isset($_GET['sort']) ? sanitize_text_field($_GET['sort']) : 'newest';
-                
-                // Set up query arguments based on sort
-                $args = array(
-                    'post_type' => 'all_recipes',
-                    'posts_per_page' => 7,
-                    'paged' => $paged,
-                    'category_name' => '目に優しいレシピ' // Add your category slug here
-                );
-                
-                switch($sort) {
-                    case 'popular':
-                        $args['meta_key'] = 'post_views';
-                        $args['orderby'] = 'meta_value_num';
-                        $args['order'] = 'DESC';
-                        break;
-                    case 'oldest':
-                        $args['orderby'] = 'date';
-                        $args['order'] = 'ASC';
-                        break;
-                    default: // newest
-                        $args['orderby'] = 'date';
-                        $args['order'] = 'DESC';
-                }
-                
-                $query = new WP_Query($args);
+		<article class="product-card cat03">
+			<img src="img/item/card23.jpg" alt="【ドラゴンボール】FB06-003">
+			<p class="card_name">【ドラゴンボール】FB06-003</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
 
-                if ($query->have_posts()) :
-                    while ($query->have_posts()) : $query->the_post();
-                        $category = get_the_category();
-                        ?>
+		<article class="product-card cat03">
+			<img src="img/item/card24.jpg" alt="【ドラゴンボール】FB06-027">
+			<p class="card_name">【ドラゴンボール】FB06-027</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
 
-                    <li class="card-item swiper-slide">
-                        <a href="<?php echo get_permalink(); ?>" class="card-link">
-                        <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('full', array('class' => 'article-thumbnail')); ?>
-                            <?php else : ?>
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/articles/default-article.jpg" alt="<?php echo esc_attr(get_the_title()); ?>">
-                            <?php endif; ?>
-                            <div class="flex space-between"><p class="badge"><?php echo esc_html($category[0]->name); ?></p><p class="date"><?php echo get_the_date('Y/m/d'); ?></p></div>
-                            <h2 class="card-title"><?php echo the_title(); ?></h2>
-                            <button class="card-button"></button>
-                        </a>
-                    </li>
-                    <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    ?>
-                    <div class="no-articles">
-                        <p>記事が見つかりませんでした。</p>
-                    </div>
-                <?php
-                endif;
-                ?>
-                </ul>
-                <div class="swiper-pagination swiper-pagination-vision"></div>
-            </div>
-            <div class="seeMoreButton">
-                <a href="<?php echo site_url();?>/recipes"><span>目に優しいレシピをもっと見る</span></a>
-            </div>
-        </section>
-        <section class="eyeProducts inConteiner">
-            <div class="bg vector8"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector9.png" alt=""></div>
-            <div class="bg vector11"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector14.png" alt=""></div>
-            <div class="bg vector7"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector16.png" alt=""></div>
-            <div class="bg vector2"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector7.png" alt=""></div>
-            <div class="bg vector1"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector10.png" alt=""></div>
-            <div class="visionDictionaryTitle">
-                <div class="recipeIcon"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/eyeProduct.png" alt="testResult"></div>
-                <div class="section-title"><p class="text-top">アイケア商品</p></div>
-            </div>
-            <div class="eyeProductsCareds">
-                <div class="topEyeProductCard">
-                    <div class="eyeProductCard">
-                        <div class="corner top left"></div>
-                        <div class="corner top right"></div>
-                        <div class="corner bottom left"></div>
-                        <div class="corner bottom right"></div>
-                        <div class="corner-img">
-                            <a href="https://www.heallite.com/c/option/M0002" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/eyeProducts/eyeProdect-top.jpg" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="eyeProductCardRow">
-                    <div><a href="https://www.heallite.com/c/option/M0002-2" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/eyeProducts/eyeProduct1.jpg" alt=""></a></div>
-                    <div><a href="https://www.heallite.com/c/desklight/maker/MS0001-1" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/eyeProducts/eyeProduct2.jpg" alt=""></a></div>
-                    <div><a href="https://www.heallite.com/c/desklight/maker/MC00" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/eyeProducts/eyeProduct3.jpg" alt=""></a></div>
-                    <div><a href="https://www.heallite.com/c/desklight/gentlite/D0007" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/eyeProducts/eyeProduct4.jpg" alt=""></a></div>
-                    <div><a href="https://www.heallite.com/c/desklight/maker/227"  target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/eyeProducts/eyeProduct5.jpg" alt=""></a></div>
-                    <div><a href="https://www.heallite.com/c/desklight/maker/eye7" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/eyeProducts/eyeProduct6.jpg" alt=""></a></div>
-                </div>
-            </div>
-            <div class="seeMoreButton">
-                <a href="<?php echo site_url();?>/products"><span>アイケア商品をもっと見る</span></a>
-            </div>
-        </section>
-        <section class="aboutHomework container">
-            <div class="bg vector2"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector1.png" alt=""></div>
-            <div class="bg vector8"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector3.png" alt=""></div>
-            <div class="bg vector1"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector15.png" alt=""></div>
-            <div class="title Homework-kindle"><p>ホームワックとは?</p></div>
-            <div class="content">
-                <p>テレビを見ながら簡単に使える視力回復トレーニングデバイスです。
-                    「クリア」と「ぼかし」の画面切り替えで目のピント調節機能を養い、近視の進行を抑えます。
-                    子供から大人まで利用可能で、目のケアに最適です。</p>
-            </div>
-            <div class="banners">
-                <div><a href="https://www.homewac.com/clinical.html" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/aboutHomework1.jpg" alt=""></a></div>
-                <div><a href="https://www.homewac.com/develop.html" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/aboutHomework2.jpg" alt=""></a></div>
-                <div><a href="https://www.homewac.com/principle.html" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/aboutHomework3.jpg" alt=""></a></div>
-            </div>
-        </section>
-        <section class="kindleBooks inConteiner">
-            <div class="bg vector1"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector15.png" alt=""></div>
-            <div class="bg vector8"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector3.png" alt=""></div>
-            <div class="bg vector2"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector1.png" alt=""></div>
-            <div class="title Homework-kindle"><p>Kindleブックス</p></div>
-            <div class="books">
-                <?php
-                    // Get the latest 3 posts
-                    $args = array(
-                        'post_type' => 'all_kindlebooks',
-                        'posts_per_page' => 3,
-                        'orderby' => 'date',
-                        'order' => 'DESC'
-                    );
-                    
-                    $latest_query = new WP_Query($args);
-                    
-                    if ($latest_query->have_posts()) :
-                        while ($latest_query->have_posts()) : $latest_query->the_post();
-                            $category = get_the_category();
-                    ?>
-                        <div  onclick="location.href='<?php echo get_permalink() ?>';">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
-                            <?php else : ?>
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/articles/default-article.jpg" alt="<?php echo esc_attr(get_the_title()); ?>">
-                            <?php endif; ?>
-                        </div>
-                    <?php
-                        endwhile;
-                        wp_reset_postdata();
-                    else :
-                    ?>
-                    <div class="no-posts">
-                        <p>記事が見つかりませんでした。</p>
-                    </div>
-                <?php
-                endif;
-                ?>
-            </div>
-            <div class="seeMoreButton">
-                <a href="<?php echo site_url();?>/kindleBooks"><span>Kindleブックスをもっと見る</span></a>
-            </div>
-        </section>
-        <section class="line-youtube-registration">
-            <div class="inConteiner">
-                <a href="https://line.me/ti/p/@959ejwxf" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/line-registration.jpg" alt="line-youtube-registration"></a>
-                <a href="https://www.youtube.com/channel/UCN0xlurLZi2E3m2_Nl5DT8Q" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/youtube-registration.jpg" alt="line-youtube-registration"></a>
-            </div>
-        </section>
-        <section class="staffRecommended inConteiner">
-            <div class="bg vector15"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector6.png" alt=""></div>
-            <div class="bg vector8"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector7.png" alt=""></div>
-            <div class="bg vector2"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector4.png" alt=""></div>
-            <div class="bg vector1"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector10.png" alt=""></div>
-            <div class="staffRecommendedTitle">
-                <div class="staffRecommendedIcon"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/staffRecommended.png" alt="testResult"></div>
-                <div class="section-title"><p class="text-top">スタッフのおすすめ記事</p></div>
-            </div>
-            <div class="contents">
-                <?php
-                // Set up query arguments for staff recommended posts
-                $args = array(
-                    'post_type' => 'staff_recommended',
-                    'posts_per_page' => 3,
-                    'category_name' => '働き方・生き方', // Make sure this category exists
-                    'orderby' => 'date',
-                    'order' => 'DESC'
-                );
-                
-                $query = new WP_Query($args);
-                $counter = 1;
+		<article class="product-card cat03">
+			<img src="img/item/card25.jpg" alt="【ドラゴンボール】FB06-055">
+			<p class="card_name">【ドラゴンボール】FB06-055</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
 
-                if ($query->have_posts()) :
-                    while ($query->have_posts()) : $query->the_post();
-                        $category = get_the_category();
-                ?>
-                    <div class="content" onclick="location.href='<?php echo get_permalink() ?>';">
-                        <div class="contentNumber"><p><?php echo $counter; ?></p></div>
-                        <div class="contnetImage">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('full', array('alt' => get_the_title())); ?>
-                            <?php else : ?>
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/staffRecommended/default.png" alt="<?php echo esc_attr(get_the_title()); ?>">
-                            <?php endif; ?>
-                        </div>
-                        <div class="contentText">
-                            <div class="contentTitle"><p><?php echo esc_html($category[0]->name); ?></p></div>
-                            <div class="contentText-content"><p><?php echo get_the_title(); ?></p></div>
-                            <div class="contentDate"><p>&#9201; <?php echo get_the_date('Y.m.d'); ?></p></div>
-                        </div>
-                    </div>
-                <?php
-                        $counter++;
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                ?>
-                    <div class="no-posts">
-                        <p>記事が見つかりませんでした。</p>
-                    </div>
-                <?php
-                endif;
-                ?>
-            </div>
-        </section>
-        <section class="subscriptionGuide">
-            <div class="container">
-                <a href="https://www.heallite.com/c/desklight/gentlite/M0002" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/land_banner1.jpg" alt="line-youtube-registration"></a>
-                <a href="<?php echo site_url();?>/visionpossibility"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/land_banner2.jpg" alt="line-youtube-registration"></a>
-            </div>
-        </section>
-        <section class="notice">
-            <div class="bg vector1"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector15.png" alt=""></div>
-            <div class="bg vector9"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector3.png" alt=""></div>
-            <div class="bg vector11"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/backgrounds/Vector10.png" alt=""></div>
-            <div class="inConteiner">
-                <div class="notice-title"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/notice1.png" alt=""><p>お知らせ</p></div>
-                <div class="notice-content">
-                    <div class="notice-content-title"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/Icons/notice1.png" alt=""><p>お知らせ</p></div>
-                    <div class="notice-content-texts">
-                    <?php
-                    // Set up query arguments for staff recommended posts
-                    $args = array(
-                        'post_type' => 'all_notice',
-                        'posts_per_page' => 5,
-                        'category_name' => 'お知らせ', // Make sure this category exists
-                        'orderby' => 'date',
-                        'order' => 'DESC'
-                    );
-                    
-                    $query = new WP_Query($args);
-                    $counter = 1;
+		<article class="product-card cat03">
+			<img src="img/item/card26.jpg" alt="【ドラゴンボール】FB06-076">
+			<p class="card_name">【ドラゴンボール】FB06-076</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
 
-                    if ($query->have_posts()) :
-                        while ($query->have_posts()) : $query->the_post();
-                            $category = get_the_category();
-                    ?>
-                        <div class="notice-content-text" onclick="location.href='<?php echo get_permalink() ?>';">
-                            <div><p><?php echo get_the_title(); ?></p></div>
-                            <div class="notice-content-text-date"><p>&#9201; <?php echo get_the_date('Y.m.d'); ?></p></div>
-                        </div>
-                    <?php
-                        $counter++;
-                    endwhile;
-                    wp_reset_postdata();
-                    else :
-                    ?>
-                        <div class="no-posts">
-                            <p>記事が見つかりませんでした。</p>
-                        </div>
-                    <?php
-                    endif;
-                    ?>
-                    </div>
-                </div>
-            </div>
-            <div class="seeMoreButton">
-                <a href="<?php echo site_url();?>/notice"><span>お知らせをもっと見る</span></a>
-            </div>
-        </section>
-    </main>
-    <script src='https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js'></script>
-    <script src='<?php echo get_stylesheet_directory_uri(); ?>/assets/js/cardWrapper.js'></script>
-    <?php get_footer(); ?>
+		<article class="product-card cat03">
+			<img src="img/item/card27.jpg" alt="【ドラゴンボール】FB06-109">
+			<p class="card_name">【ドラゴンボール】FB06-109</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card28.jpg" alt="【ドラゴンボール】FS10-01">
+			<p class="card_name">【ドラゴンボール】FS10-01</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card29.jpg" alt="【ドラゴンボール】FS10-04">
+			<p class="card_name">【ドラゴンボール】FS10-04</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card30.jpg" alt="【ドラゴンボール】FS10-08">
+			<p class="card_name">【ドラゴンボール】FS10-08</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card31.jpg" alt="【ドラゴンボール】FS10-11">
+			<p class="card_name">【ドラゴンボール】FS10-11</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card32.jpg" alt="【ドラゴンボール】FS10-14">
+			<p class="card_name">【ドラゴンボール】FS10-14</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card33.jpg" alt="【ドラゴンボール】FS09-18">
+			<p class="card_name">【ドラゴンボール】FS09-18</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card34.jpg" alt="【ドラゴンボール】FB04-002">
+			<p class="card_name">【ドラゴンボール】FB04-002</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card35.jpg" alt="【ドラゴンボール】FB06-120">
+			<p class="card_name">【ドラゴンボール】FB06-120</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card36.jpg" alt="【ドラゴンボール】FS09-02">
+			<p class="card_name">【ドラゴンボール】FS09-02</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card37.jpg" alt="【ドラゴンボール】FS09-06">
+			<p class="card_name">【ドラゴンボール】FS09-06</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card38.jpg" alt="【ドラゴンボール】FS09-15">
+			<p class="card_name">【ドラゴンボール】FS09-15</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card39.jpg" alt="【ドラゴンボール】FB05-115">
+			<p class="card_name">【ドラゴンボール】FB05-115</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card40.jpg" alt="【ドラゴンボール】FB06-120">
+			<p class="card_name">【ドラゴンボール】FB06-120</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card41.jpg" alt="【ドラゴンボール】FS09-07">
+			<p class="card_name">【ドラゴンボール】FS09-07</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card42.jpg" alt="【ドラゴンボール】FS09-10">
+			<p class="card_name">【ドラゴンボール】FS09-10</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat03">
+			<img src="img/item/card43.jpg" alt="【ドラゴンボール】FS09-16">
+			<p class="card_name">【ドラゴンボール】FS09-16</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card44.jpg" alt="【ポケモン　SS　リザードンＶ】">
+			<p class="card_name">【ポケモン　SS　リザードンＶ】</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card45.jpg" alt="【ポケモン】HR　シマボシ">
+			<p class="card_name">【ポケモン】HR　シマボシ</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card46.jpg" alt="【ポケモン】HR　トウキ">
+			<p class="card_name">【ポケモン】HR　トウキ</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card47.jpg" alt="【ポケモン】HR　ポッドとデントとコーン">
+			<p class="card_name">【ポケモン】HR　ポッドとデントとコーン</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card48.jpg" alt="【ポケモン】RR　ヒアスイ　オオニューラＶ">
+			<p class="card_name">【ポケモン】RR　ヒアスイ　オオニューラＶ</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card49.jpg" alt="【ポケモン】ＳＲ　アップリューＶ">
+			<p class="card_name">【ポケモン】ＳＲ　アップリューＶ</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card50.jpg" alt="【ポケモン】SR　博士の研究">
+			<p class="card_name">【ポケモン】SR　博士の研究</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card51.jpg" alt="【ポケモン】SS　イーブイGX">
+			<p class="card_name">【ポケモン】SS　イーブイGX</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card52.jpg" alt="【ポケモン】ミラー仕様　アセロラ">
+			<p class="card_name">【ポケモン】ミラー仕様　アセロラ</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card53.jpg" alt="【ポケモン】AR　ガマゲロゲ">
+			<p class="card_name">【ポケモン】AR　ガマゲロゲ</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card54.jpg" alt="【ポケモン】AR　ソノソラス">
+			<p class="card_name">【ポケモン】AR　ソノソラス</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card55.jpg" alt="【ポケモン】AR　ゾロア">
+			<p class="card_name">【ポケモン】AR　ゾロア</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card56.jpg" alt="【ポケモン】AR　ツターシャ">
+			<p class="card_name">【ポケモン】AR　ツターシャ</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card57.jpg" alt="【ポケモン】PR　ビクティニ">
+			<p class="card_name">【ポケモン】PR　ビクティニ</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card58.jpg" alt="【ポケモン】R　ミラー仕様　シャンデラ">
+			<p class="card_name">【ポケモン】R　ミラー仕様　シャンデラ</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card59.jpg" alt="【ポケモン】AR　ポカブ">
+			<p class="card_name">【ポケモン】AR　ポカブ</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card60.jpg" alt="【ポケモン】SAR　エルフーン">
+			<p class="card_name">【ポケモン】SAR　エルフーン</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card61.jpg" alt="【ポケモン】SAR　キュレ、イex">
+			<p class="card_name">【ポケモン】SAR　キュレ、イex</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card62.jpg" alt="【ポケモン】SR　Nの筋書き">
+			<p class="card_name">【ポケモン】SR　Nの筋書き</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card63.jpg" alt="【ポケモン】SR　トウコ">
+			<p class="card_name">【ポケモン】SR　トウコ</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card64.jpg" alt="【ポケモン】SAR　サザンドラex">
+			<p class="card_name">【ポケモン】SAR　サザンドラex</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card65.jpg" alt="【ポケモン】SAR　ゼクロムex">
+			<p class="card_name">【ポケモン】SAR　ゼクロムex</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card66.jpg" alt="【ポケモン】SAR　メロエッタex">
+			<p class="card_name">【ポケモン】SAR　メロエッタex</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card67.jpg" alt="【ポケモン】SAR　レシラムex">
+			<p class="card_name">【ポケモン】SAR　レシラムex</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card68.jpg" alt="【ポケモン】SAR　Ｎの筋書き">
+			<p class="card_name">【ポケモン】SAR　Ｎの筋書き</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card69.jpg" alt="【ポケモン】SAR　ゼクロムex">
+			<p class="card_name">【ポケモン】SAR　ゼクロムex</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card70.jpg" alt="【ポケモン】SAR　トウコ">
+			<p class="card_name">【ポケモン】SAR　トウコ</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card71.jpg" alt="【ポケモン】SAR　レシラム">
+			<p class="card_name">【ポケモン】SAR　レシラム</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat02">
+			<img src="img/item/card72.jpg" alt="【ポケモン】BWR　ゼクロム">
+			<p class="card_name">【ポケモン】BWR　ゼクロム</p>
+			<p>¥249,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card73.jpg" alt="【ワンピース】SEC　コビー(金枠)">
+			<p class="card_name">【ワンピース】SEC　コビー(金枠)</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card74.jpg" alt="【ワンピース】ドン！！（サボ　10歳）">
+			<p class="card_name">【ワンピース】ドン！！（サボ　10歳）</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card75.jpg" alt="【ワンピース】パラレル　ドン！！（エドワード・ニューゲート）">
+			<p class="card_name">【ワンピース】パラレル　ドン！！（エドワード・ニューゲート）</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card76.jpg" alt="【ワンピース】パラレル　ドン！！(サボ)">
+			<p class="card_name">【ワンピース】パラレル　ドン！！(サボ)</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card77.jpg" alt="【ワンピース】パラレル　ドン！！(光月おでん)">
+			<p class="card_name">【ワンピース】パラレル　ドン！！(光月おでん)</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card78.jpg" alt="【ワンピース】パラレル　ドン！（アイスバーグ）">
+			<p class="card_name">【ワンピース】パラレル　ドン！（アイスバーグ）</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card79.jpg" alt="【ワンピース】モンキー・Ｄ・ルフィ(金枠)">
+			<p class="card_name">【ワンピース】モンキー・Ｄ・ルフィ(金枠)</p>
+			<p>¥9,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card80.jpg" alt="【ワンピース】PR　パラレル　モンキーＤルフィ">
+			<p class="card_name">【ワンピース】PR　パラレル　モンキーＤルフィ</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card81.jpg" alt="【ワンピース】SR　パラレル　ナミ(両手武器持ち)">
+			<p class="card_name">【ワンピース】SR　パラレル　ナミ(両手武器持ち)</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card82.jpg" alt="【ワンピース】スペシャルカード　シルバーズ・レイリー">
+			<p class="card_name">【ワンピース】スペシャルカード　シルバーズ・レイリー</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card83.jpg" alt="【ワンピース】パラレル　カーリー・ダダン(モノクロ)">
+			<p class="card_name">【ワンピース】パラレル　カーリー・ダダン(モノクロ)</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card84.jpg" alt="【ワンピース】SEC　パラレル　モンキー・Ｄ・ルフィ">
+			<p class="card_name">【ワンピース】SEC　パラレル　モンキー・Ｄ・ルフィ</p>
+			<p>¥19,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card85.jpg" alt="【ワンピース】SEC　スペシャルカード　サンジ">
+			<p class="card_name">【ワンピース】SEC　スペシャルカード　サンジ</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card86.jpg" alt="【ワンピース】ＳＲ　スペシャルカード　ステゥーシ">
+			<p class="card_name">【ワンピース】ＳＲ　スペシャルカード　ステゥーシ</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card87.jpg" alt="【ワンピース】SR　パラレル　サボ">
+			<p class="card_name">【ワンピース】SR　パラレル　サボ</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card88.jpg" alt="【ワンピース】スペシャルカード　しらほし">
+			<p class="card_name">【ワンピース】スペシャルカード　しらほし</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card89.jpg" alt="【ワンピース】ドン！！(ヤマト！！！キミの為に死ねる！！！)">
+			<p class="card_name">【ワンピース】ドン！！(ヤマト！！！キミの為に死ねる！！！)</p>
+			<p>¥49,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card90.jpg" alt="【ワンピース】PR　モンキー・Ｄ・ルフィ(実写)">
+			<p class="card_name">【ワンピース】PR　モンキー・Ｄ・ルフィ(実写)</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card91.jpg" alt="【ワンピース】SR　パラレル　シャーロット・カタクリ(lack画)">
+			<p class="card_name">【ワンピース】SR　パラレル　シャーロット・カタクリ(lack画)</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card92.jpg" alt="【ワンピース】パラレル　ギア２(フルアート)">
+			<p class="card_name">【ワンピース】パラレル　ギア２(フルアート)</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card93.jpg" alt="【ワンピース】パラレル　ドン！！！(ウタ)">
+			<p class="card_name">【ワンピース】パラレル　ドン！！！(ウタ)</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card94.jpg" alt="【ワンピース】パラレル　ナミ(右手武器)">
+			<p class="card_name">【ワンピース】パラレル　ナミ(右手武器)</p>
+			<p>¥99,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card95.jpg" alt="【ワンピース】SEC　スペシャルカード　サンジ">
+			<p class="card_name">【ワンピース】SEC　スペシャルカード　サンジ</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card96.jpg" alt="【ワンピース】SR　スペシャルカード　シャンクス">
+			<p class="card_name">【ワンピース】SR　スペシャルカード　シャンクス</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card97.jpg" alt="【ワンピース】SR　スペシャルカード　ルフィ太郎">
+			<p class="card_name">【ワンピース】SR　スペシャルカード　ルフィ太郎</p>
+			<p>¥109,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card98.jpg" alt="【ワンピース】Ｒ　パラレル　ギア２(フルアート)">
+			<p class="card_name">【ワンピース】Ｒ　パラレル　ギア２(フルアート)</p>
+			<p>¥249,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+
+		<article class="product-card cat01">
+			<img src="img/item/card99.jpg" alt="【ワンピース】SEC　パラレル　モンキー・Ｄ・ルフィ(背景原作)">
+			<p class="card_name">【ワンピース】SEC　パラレル　モンキー・Ｄ・ルフィ(背景原作)</p>
+			<p>¥249,800(税込)</p>
+			<button>カートに追加</button>
+		</article>
+	</section>
+</main>
+<?php get_footer(); ?>
