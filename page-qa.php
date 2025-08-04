@@ -2,10 +2,10 @@
 <main class="subpage">
   <section class="categories">
     <ul>
-      <li><a href="./cat01.html"><img src="img/cat01.jpg" alt="ONE PIECE CARD GAME"></a></li>
-      <li><a href="./cat02.html"><img src="img/cat02.jpg" alt="ポケモンカードゲーム"></a></li>
-      <li><a href="./cat03.html"><img src="img/cat03.jpg" alt="ドラゴンボールカードゲーム"></a></li>
-      <li><a href="./cat04.html"><img src="img/cat04.jpg" alt="その他"></a></li>
+      <li><a href="<?php echo site_url();?>/cat01.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat01.jpg" alt="ONE PIECE CARD GAME"></a></li>
+      <li><a href="<?php echo site_url();?>/cat02.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat02.jpg" alt="ポケモンカードゲーム"></a></li>
+      <li><a href="<?php echo site_url();?>/cat03.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat03.jpg" alt="ドラゴンボールカードゲーム"></a></li>
+      <li><a href="<?php echo site_url();?>/cat04.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat04.jpg" alt="その他"></a></li>
     </ul>
   </section>
 
@@ -18,7 +18,7 @@
 
   <section class="wrap terms privacy">
     <ul class="breadcrumb">
-      <li><a href="./">トップページ</a></li>
+      <li><a href="<?php echo home_url(); ?>">トップページ</a></li>
       <li>個人情報の保護方針</li>
     </ul>
 
