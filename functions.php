@@ -29,65 +29,65 @@ add_shortcode( 'woocommerce_login_form', function() {
 add_shortcode( 'woocommerce_register_form_custom', function() { 
     if ( 'yes' !== get_option( 'woocommerce_enable_signup_and_login_from_checkout' ) 
         && 'yes' !== get_option( 'woocommerce_enable_myaccount_registration' ) ) {
-        return '<p>Registration is currently disabled.</p>';
+        return '<p>すでに登録され、ログインしています。</p>';
     }
 
     ob_start();
     ?>
+    <h2>会員登録</h2>
+    <div class="loginform">
     <form method="post" class="woocommerce-form woocommerce-form-register register"> 
         <?php do_action( 'woocommerce_register_form_start' ); ?> 
 
-        <!-- Name -->
+        <!-- 名前 -->
         <p class="woocommerce-form-row form-row-wide"> 
-            <label for="billing_full_name"><?php esc_html_e( 'Name', 'woocommerce' ); ?> <span class="required">*</span></label> 
+            <label for="billing_full_name"><?php esc_html_e( '名前', 'woocommerce' ); ?></label> 
             <input type="text" name="billing_full_name" id="billing_full_name" value="<?php echo isset($_POST['billing_full_name']) ? esc_attr(wp_unslash($_POST['billing_full_name'])) : ''; ?>" /> 
         </p>
 
-        <!-- Email -->
+        <!-- メール -->
         <p class="woocommerce-form-row form-row-wide"> 
-            <label for="reg_email"><?php esc_html_e( 'Email address', 'woocommerce' ); ?> <span class="required">*</span></label> 
+            <label for="reg_email"><?php esc_html_e( 'メールアドレス', 'woocommerce' ); ?></label> 
             <input type="email" name="email" id="reg_email" value="<?php echo isset($_POST['email']) ? esc_attr(wp_unslash($_POST['email'])) : ''; ?>" /> 
         </p> 
-
+        
+        <!-- 電話番号 -->
+        <p class="woocommerce-form-row form-row-wide"> 
+            <label for="billing_phone"><?php esc_html_e( '電話番号', 'woocommerce' ); ?></label> 
+            <input type="text" name="billing_phone" id="billing_phone" value="<?php echo isset($_POST['billing_phone']) ? esc_attr(wp_unslash($_POST['billing_phone'])) : ''; ?>" /> 
+        </p>
+        
+        <!-- 住所 -->
+        <p class="woocommerce-form-row form-row-wide"> 
+            <label for="billing_address_1"><?php esc_html_e( '住所', 'woocommerce' ); ?></label> 
+            <input type="text" name="billing_address_1" id="billing_address_1" value="<?php echo isset($_POST['billing_address_1']) ? esc_attr(wp_unslash($_POST['billing_address_1'])) : ''; ?>" /> 
+        </p>
+        
         <!-- Password -->
         <p class="woocommerce-form-row form-row-wide"> 
-            <label for="reg_password"><?php esc_html_e( 'Password', 'woocommerce' ); ?> <span class="required">*</span></label> 
+            <label for="reg_password"><?php esc_html_e( 'パスワード', 'woocommerce' ); ?></label> 
             <input type="password" name="password" id="reg_password" /> 
         </p>
 
         <!-- Password Confirm -->
         <p class="woocommerce-form-row form-row-wide"> 
-            <label for="reg_password_confirm"><?php esc_html_e( 'Confirm Password', 'woocommerce' ); ?> <span class="required">*</span></label> 
+            <label for="reg_password_confirm"><?php esc_html_e( 'パスワード(確認用)', 'woocommerce' ); ?></label> 
             <input type="password" name="password_confirm" id="reg_password_confirm" /> 
         </p>
-
-        <!-- Phone -->
-        <p class="woocommerce-form-row form-row-wide"> 
-            <label for="billing_phone"><?php esc_html_e( 'Phone Number', 'woocommerce' ); ?> <span class="required">*</span></label> 
-            <input type="text" name="billing_phone" id="billing_phone" value="<?php echo isset($_POST['billing_phone']) ? esc_attr(wp_unslash($_POST['billing_phone'])) : ''; ?>" /> 
-        </p>
-
-        <!-- Address -->
-        <p class="woocommerce-form-row form-row-wide"> 
-            <label for="billing_address_1"><?php esc_html_e( 'Address', 'woocommerce' ); ?> <span class="required">*</span></label> 
-            <input type="text" name="billing_address_1" id="billing_address_1" value="<?php echo isset($_POST['billing_address_1']) ? esc_attr(wp_unslash($_POST['billing_address_1'])) : ''; ?>" /> 
-        </p>
-
-        <?php do_action( 'woocommerce_register_form' ); ?> 
-        <?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?> 
-
+        
         <p class="woocommerce-FormRow form-row"> 
             <button type="submit" class="woocommerce-Button button" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>">
-                <?php esc_html_e('Register', 'woocommerce' ); ?>
+                <?php esc_html_e('送信する', 'woocommerce' ); ?>
             </button> 
         </p> 
 
         <?php do_action( 'woocommerce_register_form_end' ); ?> 
     </form> 
+    </div>
     <?php
 
     if ( is_user_logged_in() ) {
-        echo '<p style="margin-top:20px;color:green;">You are already registered and logged in.</p>';
+        echo '<p style="margin-top:20px;color:green;">すでに登録され、ログインしています。</p>';
     }
 
     return ob_get_clean();
