@@ -2,10 +2,10 @@
 <main>
   <section class="categories">
     <ul>
-      <li><a href="<?php echo site_url();?>/cat01.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat01.jpg" alt="ONE PIECE CARD GAME"></a></li>
-      <li><a href="<?php echo site_url();?>/cat02.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat02.jpg" alt="ポケモンカードゲーム"></a></li>
-      <li><a href="<?php echo site_url();?>/cat03.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat03.jpg" alt="ドラゴンボールカードゲーム"></a></li>
-      <li><a href="<?php echo site_url();?>/cat04.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat04.jpg" alt="その他"></a></li>
+      <li><a href="<?php echo site_url();?>/cat01"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat01.jpg" alt="ONE PIECE CARD GAME"></a></li>
+      <li><a href="<?php echo site_url();?>/cat02"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat02.jpg" alt="ポケモンカードゲーム"></a></li>
+      <li><a href="<?php echo site_url();?>/cat03"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat03.jpg" alt="ドラゴンボールカードゲーム"></a></li>
+      <li><a href="<?php echo site_url();?>/cat04"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/cat04.jpg" alt="その他"></a></li>
     </ul>
   </section>
   <ul class="breadcrumb">
