@@ -376,6 +376,10 @@ header nav {display:none;}
 
 .loginform ul {list-style:none;line-height:2;}
 
+.woocommerce-privacy-policy-text{
+  display: none;
+}
+
 /* SPサイズ */
 
 @media screen and (max-width:800px){

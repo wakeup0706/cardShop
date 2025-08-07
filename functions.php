@@ -75,6 +75,9 @@ add_shortcode( 'woocommerce_register_form_custom', function() {
             <input type="password" name="password_confirm" id="reg_password_confirm" /> 
         </p>
         
+        <?php do_action( 'woocommerce_register_form' ); ?> 
+        <?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?> 
+        
         <p class="woocommerce-FormRow form-row"> 
             <button type="submit" class="woocommerce-Button button" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>">
                 <?php esc_html_e('送信する', 'woocommerce' ); ?>
@@ -129,3 +132,117 @@ add_action( 'woocommerce_created_customer', function( $customer_id ) {
 add_filter( 'woocommerce_registration_redirect', function() {
     return home_url(); // change URL as needed
 } );
+
+
+// 
+add_action( 'init', function() {
+    if ( isset($_POST['register']) && isset($_POST['woocommerce-register-nonce']) 
+        && wp_verify_nonce($_POST['woocommerce-register-nonce'], 'woocommerce-register') ) {
+
+        $email    = sanitize_email($_POST['email']);
+        $password = $_POST['password'];
+        $confirm  = $_POST['password_confirm'];
+        $name     = sanitize_text_field($_POST['billing_full_name']);
+        $phone    = sanitize_text_field($_POST['billing_phone']);
+        $address  = sanitize_text_field($_POST['billing_address_1']);
+
+        // Validation
+        $errors = new WP_Error();
+        if ( empty($name) ) {
+            $errors->add('name_error', '名前を入力してください。');
+        }
+        if ( empty($email) || !is_email($email) ) {
+            $errors->add('email_error', '正しいメールアドレスを入力してください。');
+        } elseif ( email_exists($email) ) {
+            $errors->add('email_exists', 'このメールアドレスは既に使われています。');
+        }
+        if ( empty($password) || $password !== $confirm ) {
+            $errors->add('password_error', 'パスワードが一致していません。');
+        }
+        if ( empty($phone) ) {
+            $errors->add('phone_error', '電話番号を入力してください。');
+        }
+        if ( empty($address) ) {
+            $errors->add('address_error', '住所を入力してください。');
+        }
+
+        if ( ! empty($errors->errors) ) {
+            foreach ( $errors->get_error_messages() as $message ) {
+                wc_add_notice( $message, 'error' );
+            }
+            return;
+        }
+
+        // Create user
+        $user_id = wp_create_user( $email, $password, $email );
+        if ( is_wp_error($user_id) ) {
+            wc_add_notice( 'ユーザーの作成中にエラーが発生しました。', 'error' );
+            return;
+        }
+
+        // Set display name
+        wp_update_user([
+            'ID' => $user_id,
+            'display_name' => $name
+        ]);
+
+        // Save meta data
+        update_user_meta($user_id, 'billing_full_name', $name);
+        update_user_meta($user_id, 'billing_first_name', $name);
+        update_user_meta($user_id, 'first_name', $name);
+        update_user_meta($user_id, 'billing_phone', $phone);
+        update_user_meta($user_id, 'billing_address_1', $address);
+
+        // Auto-login (optional)
+        wc_set_customer_auth_cookie( $user_id );
+        wp_set_current_user( $user_id );
+
+        // Redirect to My Account or any other page
+        wp_safe_redirect( site_url('/myaccount') );
+        exit;
+    }
+});
+
+
+// --------------------------------------------
+// Enable [woocommerce_lost_password] shortcode
+add_shortcode( 'woocommerce_lost_password', function () {
+    if ( is_user_logged_in() ) {
+        return '<p>すでにログインしています。</p>';
+    }
+
+    ob_start();
+    wc_get_template( 'myaccount/form-lost-password.php' );
+    return ob_get_clean();
+});
+
+// Override WooCommerce Lost Password redirect
+add_filter( 'woocommerce_lost_password_redirect', function( $url ) {
+    return site_url( '/lost-password/?reset-link-sent=true' );
+});
+
+add_action( 'template_redirect', function () {
+    // Check if the reset link is being accessed
+    if ( isset( $_GET['key'], $_GET['login'] ) && is_account_page() && is_user_logged_out() ) {
+        // Redirect to your custom reset page with the same parameters
+        wp_redirect( site_url( '/reset-password/' ) . '?' . http_build_query( $_GET ) );
+        exit;
+    }
+});
+
+// Redirect WooCommerce's default reset-password link to our custom page
+add_action( 'template_redirect', function () {
+    if (
+        isset( $_GET['key'], $_GET['login'] )
+        && is_account_page()
+        && ! is_user_logged_in()
+        && strpos( $_SERVER['REQUEST_URI'], 'reset-password' ) !== false
+    ) {
+        wp_redirect( site_url( '/reset-password/' ) . '?' . http_build_query( $_GET ) );
+        exit;
+    }
+});
+
+add_filter( 'woocommerce_account_reset-password_endpoint', function( $endpoint ) {
+    return 'disable-reset-password'; // Just an invalid slug so Woo doesn't hijack the route
+});
